@@ -1,0 +1,46 @@
+// Item system
+struct Item {
+    string name;
+    string description;
+    int attackDmg;
+    int throwDmg;
+    bool canTake;
+    bool isWeapon;
+};
+
+// Room structure
+struct Room {
+    string name;
+    string description;
+    string altText;
+    bool exists = false;  // Is there a room here at all?
+    bool exitNorth = false;
+    bool exitSouth = false;
+    bool exitEast = false;
+    bool exitWest = false;
+    vector<string> items;
+    bool visited = false;
+    string visitEvent = "none";
+    bool hidden = false;
+    bool altDisp = false;
+};
+
+
+struct Enemy {
+    int enemyY;
+    int enemyX;
+    string name;
+    string description;
+    int maxhp;
+    int hp;
+    int atk;
+    bool aggro;
+    bool defeated;
+    string event;
+    string defeatedMessage;
+};
+
+
+rooms[0][0].exists = true;
+rooms[0][0].name = "";
+rooms[0][0].description = "";

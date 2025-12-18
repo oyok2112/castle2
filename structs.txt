@@ -6,6 +6,7 @@ struct Item {
     int throwDmg;
     bool canTake;
     bool isWeapon;
+    bool isKey;
 };
 
 // Room structure
@@ -21,6 +22,8 @@ struct Room {
     vector<string> items;
     bool visited = false;
     string visitEvent = "none";
+    string key = "none"
+    string keyEvent = "none"
     bool hidden = false;
     bool altDisp = false;
 };

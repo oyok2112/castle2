@@ -38,6 +38,16 @@ class RoomEditor:
         self.visit_event = ttk.Entry(info_frame, width=50)
         self.visit_event.grid(row=3, column=1, pady=2)
         self.visit_event.insert(0, "none")
+
+        ttk.Label(info_frame, text="Key:").grid(row=4, column=0, sticky="w")
+        self.key = ttk.Entry(info_frame, width=50)
+        self.key.grid(row=4, column=1, pady=2)
+        self.key.insert(0, "none")
+        
+        ttk.Label(info_frame, text="Key Event:").grid(row=5, column=0, sticky="w")
+        self.key_event = ttk.Entry(info_frame, width=50)
+        self.key_event.grid(row=5, column=1, pady=2)
+        self.key_event.insert(0, "none")
         
         # Exits
         exit_frame = ttk.LabelFrame(root, text="Exits", padding=10)
@@ -92,6 +102,8 @@ class RoomEditor:
         desc = self.desc_text.get("1.0", tk.END).strip().replace('"', '\\"').replace('\n', ' ')
         alt = self.alt_text.get("1.0", tk.END).strip().replace('"', '\\"').replace('\n', ' ')
         visit_event = self.visit_event.get()
+        key = self.key.get()
+        key_event = self.key_event.get()
         items = [item.strip() for item in self.items_entry.get().split(',') if item.strip()]
         
         code = f"rooms[{y}][{x}].exists = {'true' if self.exists.get() else 'false'};\n"
@@ -103,6 +115,12 @@ class RoomEditor:
         
         if visit_event != "none":
             code += f'rooms[{y}][{x}].visitEvent = "{visit_event}";\n'
+
+        if key != "none":
+            code += f'rooms[{y}][{x}].key = "{key}";\n'
+        
+        if key_event != "none":
+            code += f'rooms[{y}][{x}].keyEvent = "{key_event}";\n'
         
         if self.exit_north.get():
             code += f'rooms[{y}][{x}].exitNorth = true;\n'
@@ -132,6 +150,10 @@ class RoomEditor:
         self.alt_text.delete("1.0", tk.END)
         self.visit_event.delete(0, tk.END)
         self.visit_event.insert(0, "none")
+        self.key.delete(0, tk.END)
+        self.key.insert(0, "none")
+        self.key_event.delete(0, tk.END)
+        self.key_event.insert(0, "none")
         self.items_entry.delete(0, tk.END)
         self.exit_north.set(False)
         self.exit_south.set(False)

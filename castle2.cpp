@@ -127,8 +127,8 @@ private:
     
 public:
     Game() {
-        initializeItems();
-        initializeEnemies();
+        initializeItems(currentLevel);
+        initializeEnemies(currentLevel);
         for (const auto& [enemyKey, enemyData] : enemyDatabase) {
             bestiary.push_back(enemyKey);
         }
@@ -136,15 +136,20 @@ public:
         initializeMap();
     }
 
-    void initializeItems() {
-        itemDatabase["machete"] = {"Machete", "Looks like a brush-cuttin' gate clearin' whackin' machine.", 1, 0, true, true, false};
-        itemDatabase["gate key"] = {"Gate Key", "A key that seems to fit the castle gate.",0, 10, true, false, true};
-        itemDatabase["dagger"] = {"Dagger", "A small, yet underwhelming, dagger.  I guess size does matter.", 2, 1, true, true, true};
+    void initializeItems(int levelID) {
+        if (levelID == 0)
+        {
+            itemDatabase["machete"] = {"Machete", "Looks like a brush-cuttin' gate clearin' whackin' machine.", 1, 0, true, true, false};
+            itemDatabase["gate key"] = {"Gate Key", "A key that seems to fit the castle gate.",0, 10, true, false, true};
+            itemDatabase["dagger"] = {"Dagger", "A small, yet underwhelming, dagger.  I guess size does matter.", 2, 1, true, true, true};
+        }
     }
     
-    void initializeEnemies() {
-        enemyDatabase["Brush"] = {2, 2, "Brush", "This overgrowth is entirely out of hand.", 1, 1, 0, false, false, "exitNorth=true", "The brush was cleared!"};
-        enemyDatabase["Castle Guard"] = {1, 1, "Castle Guard", "This guard looks like he does not...fuck......around.", 10, 10, 10, true, false, "key=gate key", "The guard was vanquished!"};
+    void initializeEnemies(int levelID) {
+        if (levelID == 0) {
+            enemyDatabase["Brush"] = {2, 2, "Brush", "This overgrowth is entirely out of hand.", 1, 1, 0, false, false, "exitNorth=true", "The brush was cleared!"};
+            enemyDatabase["Castle Guard"] = {1, 1, "Castle Guard", "This guard looks like he does not...fuck......around.", 10, 10, 10, true, false, "key=gate key", "The guard was vanquished!"};
+        }
     }
 
     void initializeLevel(int levelID) {
@@ -294,6 +299,12 @@ public:
             rooms[6][1].exitWest = true;
             rooms[6][1].key = "Southall Key";
             rooms[6][1].keyEvent = "exitEast=true";
+
+            rooms[6][2].exists = true;
+            rooms[6][2].name = "Closed Hallway";
+            rooms[6][2].description = "The hallway here was concealed by a locked door.  Now opened, you can see a dark corner curving around the end of the corridor.";
+            rooms[2][2].exitEast = true;
+            rooms[2][2].exitWest = true;
 
         }
     }

@@ -275,8 +275,10 @@ public:
             rooms[6][0].exists = true;
             rooms[6][0].name = "South West Foyer";
             rooms[6][0].description = "An empty part of a really empty looking front hallway, not only empty, but stinky also.";
+            rooms[6][0].altText = "I mean for gods' sake it smells like it hasn't been cleaned in here for...well.";
             rooms[6][0].exitNorth = true;
             rooms[6][0].exitEast = true;
+            rooms[6][0].visitEvent = "altDisp=true";
 
             rooms[4][1].exists = true;
             rooms[4][1].name = "North East Foyer";
@@ -300,11 +302,33 @@ public:
             rooms[6][1].key = "Southall Key";
             rooms[6][1].keyEvent = "exitEast=true";
 
+            rooms[2][2].exists = true;
+            rooms[2][2].name = "North Hallway - West End";
+            rooms[2][2].description = "The end of a long corridor leading east as far as you can see. The torches on the wall seem to cast a shadow about halfway down.";
+            rooms[2][2].key = "test";
+            rooms[2][2].exitSouth = true;
+            rooms[2][2].exitEast = true;
+
+            rooms[3][2].exists = true;
+            rooms[3][2].name = "Boring Passage";
+            rooms[3][2].description = "This is seriously just filler. Not a hint, filler room, move on.";
+            rooms[3][2].altText = "I said, move on...";
+            rooms[3][2].visitEvent = "altDisp=true";
+            rooms[3][2].exitNorth = true;
+            rooms[3][2].exitSouth = true;
+
+            rooms[4][2].exists = true;
+            rooms[4][2].name = "South Passage";
+            rooms[4][2].description = "From here you can see the end of a long hallway to the north, and you can hear footsteps down the hall opposite the entryway.";
+            rooms[4][2].exitNorth = true;
+            rooms[4][2].exitEast = true;
+            rooms[4][2].exitWest = true;
+
             rooms[6][2].exists = true;
             rooms[6][2].name = "Closed Hallway";
             rooms[6][2].description = "The hallway here was concealed by a locked door.  Now opened, you can see a dark corner curving around the end of the corridor.";
-            rooms[2][2].exitEast = true;
-            rooms[2][2].exitWest = true;
+            rooms[6][2].exitEast = true;
+            rooms[6][2].exitWest = true;
 
         }
     }

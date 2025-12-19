@@ -1,3 +1,13 @@
+//
+//  CASTLE2.CPP
+//    by oyok
+//
+//  see readme for description
+//
+// todo (future releases probably):
+//  spells
+//  insight: see hidden things like what keys go to what door, hidden rooms, etc
+
 #include <iostream>
 #include <string>
 #include <map>
@@ -276,6 +286,14 @@ public:
             rooms[5][1].exitNorth = true;
             rooms[5][1].exitSouth = true;
             rooms[5][1].exitWest = true;
+
+            rooms[6][1].exists = true;
+            rooms[6][1].name = "South East Foyer";
+            rooms[6][1].description = "The corner of the front hall, which upon closer inspection has a hallway, yes, but also a door is locked that would let you into that hallway. To the east. Otherwise there's that other hallway...";
+            rooms[6][1].exitNorth = true;
+            rooms[6][1].exitWest = true;
+            rooms[6][1].key = "Southall Key";
+            rooms[6][1].keyEvent = "exitEast=true";
 
         }
     }

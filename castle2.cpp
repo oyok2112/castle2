@@ -5,6 +5,7 @@
 //  see readme for description
 //
 // todo (future releases probably):
+//  enemy drops
 //  spells
 //  insight: see hidden things like what keys go to what door, hidden rooms, etc
 

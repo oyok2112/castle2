@@ -4,8 +4,10 @@ struct Item {
     string description;
     int attackDmg;
     int throwDmg;
+    int healPwr;
     bool canTake;
     bool isWeapon;
+    bool canEat;
     bool isKey;
 };
 

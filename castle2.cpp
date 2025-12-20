@@ -5,7 +5,9 @@
 //  see readme for description
 //
 // todo (future releases probably):
-//  enemy drops
+//  dropping items
+//  "potions" or eating
+//  equip system (L/R hand)
 //  spells
 //  insight: see hidden things like what keys go to what door, hidden rooms, etc
 
@@ -31,8 +33,10 @@ struct Item {
     string description;
     int attackDmg;
     int throwDmg;
+    int healPwr;
     bool canTake;
     bool isWeapon;
+    bool canEat;
     bool isKey;
 };
 
@@ -138,13 +142,12 @@ public:
     }
 
     void initializeItems(int levelID) {
-        if (levelID == 0)
-        {
-            itemDatabase["machete"] = {"Machete", "Looks like a brush-cuttin' gate clearin' whackin' machine.", 1, 0, true, true, false};
-            itemDatabase["gate key"] = {"Gate Key", "A key that seems to fit the castle gate.",0, 10, true, false, true};
-            itemDatabase["dagger"] = {"Dagger", "A small, yet underwhelming, dagger.  I guess size does matter.", 2, 1, true, true, true};
-            itemDatabase["southall key"] = {"Southall Key", "Hm where would this key go jeez I wonder...", 0, 0, true, false, true};
-        }
+        itemDatabase["machete"] = {"Machete", "Looks like a brush-cuttin' gate clearin' whackin' machine.", 1, 0, 0, true, true, false, false};
+        itemDatabase["gate key"] = {"Gate Key", "A key that seems to fit the castle gate.",0, 10, 0, true, false, true};
+        itemDatabase["dagger"] = {"Dagger", "A small, yet underwhelming, dagger.  I guess size does matter.", 2, 1, 0, true, true, false, true};
+        itemDatabase["southall key"] = {"Southall Key", "Hm where would this key go jeez I wonder...", 0, 0, 0, true, false, false, true};
+        itemDatabase["fast food"] = {"Fast Food", "The burger isn't really that hot, the fries aren't that crisp, but you're starving.", 0, 0, 5, true, false, true, true};
+        itemDatabase["white claw"] = {"White Claw™", "This is a cold (for some reason) unopened can of White Claw in your favorite fruity flavor", 0, 3, 5, true, false, true, false}
     }
     
     void initializeEnemies(int levelID) {
@@ -153,7 +156,10 @@ public:
             enemyDatabase["Castle Guard"] = {1, 1, "Castle Guard", "This guard looks like he does not...fuck......around.", 10, 10, 10, true, false, "key=gate key", "The guard was vanquished!"};
         }
         if (levelID == 1) {
-            enemyDatabase["Delivery Driver"] = {1, 1, "Delivery Driver", "The dead-eyed stare of this delivery driver meets yours as he mutters, \"left your food in the north wing like you put so bluntly in the delivery instructions.\"", 4, 4, 1, true, false, "item=fast food", "The driver ran back to his car!"};
+            enemyDatabase["Delivery Driver"] = {4, 3, "Delivery Driver", "The dead-eyed stare of this delivery driver meets yours as he mutters, \"left your food in the north wing like you put so bluntly in the delivery instructions.\"", 4, 4, 1, false, false, "item=fast food", "The driver ran back to his car!"};            
+            enemyDatabase["Lost Soul"] = {2, 5, "The spirit of someone who hasn't shaved in 30 years", 10, 4, 10, false, false, "", "The soul returned..."};
+            enemyDatabase["Lost Soul"] = {5, 5, "The spirit of someone who hasn't bathed in 30 years", 10, 4, 10, false, false, "item=white claw", "The soul returned..."};
+            enemyDatabase["Staircase Troll"] = {6, 7, "Staircase Troll", "This pointy-faced, short-statured S.O.B. is standing in front of the stairs to the next level.", 8, 8, 3, false, false, "nextLevel", "You paid the troll toll! (And got past him)"};
         }
     }
 
@@ -276,6 +282,7 @@ public:
             rooms[4][0].description = "This is a wide open entryway to the castle, a foyer if you will.";
             rooms[4][0].exitSouth = true;
             rooms[4][0].exitEast = true;
+            rooms[4][0].items.push_back("dagger");
 
             rooms[6][0].exists = true;
             rooms[6][0].name = "South West Foyer";
@@ -348,8 +355,18 @@ public:
             rooms[2][3].exitEast = true;
             rooms[2][3].exitWest = true;
 
+            rooms[4][3].exists = true;
+            rooms[4][3].name = "Middle Passage - Entry";
+            rooms[4][3].description = "There is a lost delivery driver standing here blocking your way.";
+            rooms[4][3].altText = "Now that the stunned driver has left, you can head down this hall which intersects the north and south wings of this, once again, smelly ground floor.";
+            rooms[4][3].exitEast = true;
+            rooms[4][3].exitWest = true;
             
-            
+            rooms[6][7].exists = true;
+            rooms[6][7].name = "Surprise Mothafucka!";
+            rooms[6][7].description = "Oh snap you found this level's guardian.";
+            rooms[6][7].exitNorth = true;
+            rooms[6][7].hidden = true;
         }
     }
 
@@ -377,7 +394,7 @@ public:
                 else {
                     bool enemyFound = false;
                     for (const auto& [enemyKey, enemy] : enemyDatabase) {
-                        if (enemy.enemyX == x && enemy.enemyY == y && !enemy.defeated) {
+                        if (enemy.enemyX == x && enemy.enemyY == y && !enemy.defeated && !rooms[y][x].hidden) {
                             cout << enemy.name[0];  // First character of enemy name
                             enemyFound = true;
                             break;  // Only show one enemy per tile
@@ -709,6 +726,10 @@ public:
         }
         if (event == "nextLevel") {
             nextLevel();
+        }
+        if (event.substr(0, 5) == "item=") {
+            string value = event.substr(5);
+            currentRoom.items.push_back(value);
         }
         
         currentRoom.altDisp = true;

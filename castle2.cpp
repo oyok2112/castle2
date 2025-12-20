@@ -142,6 +142,7 @@ public:
             itemDatabase["machete"] = {"Machete", "Looks like a brush-cuttin' gate clearin' whackin' machine.", 1, 0, true, true, false};
             itemDatabase["gate key"] = {"Gate Key", "A key that seems to fit the castle gate.",0, 10, true, false, true};
             itemDatabase["dagger"] = {"Dagger", "A small, yet underwhelming, dagger.  I guess size does matter.", 2, 1, true, true, true};
+            itemDatabase["southall key"] = {"Southall Key", "Hm where would this key go jeez I wonder...", 0, 0, true, false, true};
         }
     }
     
@@ -149,6 +150,9 @@ public:
         if (levelID == 0) {
             enemyDatabase["Brush"] = {2, 2, "Brush", "This overgrowth is entirely out of hand.", 1, 1, 0, false, false, "exitNorth=true", "The brush was cleared!"};
             enemyDatabase["Castle Guard"] = {1, 1, "Castle Guard", "This guard looks like he does not...fuck......around.", 10, 10, 10, true, false, "key=gate key", "The guard was vanquished!"};
+        }
+        if (levelID == 1) {
+            enemyDatabase["Delivery Driver"] = {1, 1, "Delivery Driver", "The dead-eyed stare of this delivery driver meets yours as he mutters, \"left your food in the north wing like you put so bluntly in the delivery instructions.\"", 4, 4, 1, true, false, "item=fast food", "The driver ran back to his car!"};
         }
     }
 
@@ -330,6 +334,21 @@ public:
             rooms[6][2].exitEast = true;
             rooms[6][2].exitWest = true;
 
+            rooms[0][3].exists = true;
+            rooms[0][3].name = "Northwestern Wing";
+            rooms[0][3].description = "Looks like the end of this part of this hallway, but when you look closely you see a clearly very important thing here.";
+            rooms[0][3].key = "";
+            rooms[0][3].exitEast = true;
+            rooms[0][3].items.push_back("southall key");
+
+            rooms[2][3].exists = true;
+            rooms[2][3].name = "North Hallway - Western Side";
+            rooms[2][3].description = "This hall looks like it just keeps going, and going, and going.  To the left there is a faint light and you can hear rumbling sounds like deep house techno bass coming through the walls.";
+            rooms[2][3].exitEast = true;
+            rooms[2][3].exitWest = true;
+
+            
+            
         }
     }
 
@@ -690,6 +709,7 @@ public:
         if (event == "nextLevel") {
             nextLevel();
         }
+        
         currentRoom.altDisp = true;
     }
 

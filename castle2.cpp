@@ -147,7 +147,8 @@ public:
         itemDatabase["dagger"] = {"Dagger", "A small, yet underwhelming, dagger.  I guess size does matter.", 2, 1, 0, true, true, false, true};
         itemDatabase["southall key"] = {"Southall Key", "Hm where would this key go jeez I wonder...", 0, 0, 0, true, false, false, true};
         itemDatabase["fast food"] = {"Fast Food", "The burger isn't really that hot, the fries aren't that crisp, but you're starving.", 0, 0, 5, true, false, true, true};
-        itemDatabase["white claw"] = {"White Claw™", "This is a cold (for some reason) unopened can of White Claw in your favorite fruity flavor", 0, 3, 5, true, false, true, false}
+        itemDatabase["white claw"] = {"White Claw™", "This is a cold (for some reason) unopened can of White Claw in your favorite fruity flavor", 0, 3, 5, true, false, true, false};
+        itemDatabase["chamber key"] = {"Chamber Key", "This ornate key appears to be for a door, perhaps a locked one", 0, 0, 0, true, false, false, true};
     }
     
     void initializeEnemies(int levelID) {
@@ -261,7 +262,7 @@ public:
             rooms[0][1].exists = true;
             rooms[0][1].name = "Castle Gate";
             rooms[0][1].description = "You are standing at the castle gate, which is always guarded by a giagantic brute.";
-            rooms[0][1].altText = "Easy game for babies. The gate stands before you with the standard issue Gilderhinf-style keyhole hardware.";
+            rooms[0][1].altText = "Easy game for babies. The gate stands before you with the standard issue Gilderhinf brand keyhole hardware.";
             rooms[0][1].exitSouth = true;
             rooms[0][1].key = "gate key";
             rooms[0][1].keyEvent = "nextLevel";
@@ -342,6 +343,12 @@ public:
             rooms[6][2].exitEast = true;
             rooms[6][2].exitWest = true;
 
+            rooms[6][3].exists = true;
+            rooms[6][3].name = "Closed Hallway - East";
+            rooms[6][3].description = "This is the corner of the southern section of the castle. There is an alcove and a hallway back to the main entrance.";
+            rooms[6][3].exitSouth = true;
+            rooms[6][3].exitWest = true;
+
             rooms[0][3].exists = true;
             rooms[0][3].name = "Northwestern Wing";
             rooms[0][3].description = "Looks like the end of this part of this hallway, but when you look closely you see a clearly very important thing here.";
@@ -357,13 +364,13 @@ public:
 
             rooms[4][3].exists = true;
             rooms[4][3].name = "Middle Passage - Entry";
-            rooms[4][3].description = "There is a lost delivery driver standing here blocking your way.";
+            rooms[4][3].description = "You stand face to face with a disheveled looking delviery driver, his shifty eyes meet yours and he looks like he is itching for a fight.";
             rooms[4][3].altText = "Now that the stunned driver has left, you can head down this hall which intersects the north and south wings of this, once again, smelly ground floor.";
             rooms[4][3].exitEast = true;
             rooms[4][3].exitWest = true;
             
             rooms[6][7].exists = true;
-            rooms[6][7].name = "Surprise Mothafucka!";
+            rooms[6][7].name = "Surprise!";
             rooms[6][7].description = "Oh snap you found this level's guardian.";
             rooms[6][7].exitNorth = true;
             rooms[6][7].hidden = true;
@@ -806,7 +813,7 @@ public:
         enterPause();
         cout << R"(        Also you saved the princess on the
         way home from your first adventure, just to tie up that
-        loose end. Take note Dave and D.B.)" << "\n";
+        loose end.)" << "\n";
     }
     
     void run() {
